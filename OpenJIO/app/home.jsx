@@ -1,6 +1,9 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import React from "react";
+import { router } from "expo-router";
+
+import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 
 const eventTypes = [
