@@ -29,7 +29,7 @@ const Home = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             className="flex-1 m-2 h-32 rounded-xl overflow-hidden relative"
-            onPress={() => navigation.navigate("EventList", { category: item.name })}
+            onPress={() => router.push(`category/${item.name}`)}
           >
             <Image source={item.image} className="absolute w-full h-full rounded-xl" />
             <View className="absolute top-0 left-0 w-full h-full bg-black/30 flex justify-end p-3 rounded-xl">

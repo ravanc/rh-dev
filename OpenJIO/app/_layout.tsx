@@ -22,5 +22,6 @@ export default function RootLayout() {
       <Stack.Screen name="home" options={{ headerShown: false }} />
       <Stack.Screen name="category/[category]" options={{ headerShown: false }} />
       <Stack.Screen name="create-event" options={{ headerShown: false }} />
+      <Stack.Screen name="event/[event]" options={{ headerShown: false }} />
     </Stack>
 );}
