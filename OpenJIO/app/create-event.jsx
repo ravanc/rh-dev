@@ -16,7 +16,14 @@ const CreateEvent = () => {
 
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const categories = ["Food", "Sports", "Study", "Party", "Gaming", "Competition"];
+  const categories = [
+    "Food",
+    "Sports",
+    "Study",
+    "Party",
+    "Gaming",
+    "Competition",
+  ];
 
   const handleSubmit = () => {
     // Here you would typically send the data to your backend
@@ -28,31 +35,37 @@ const CreateEvent = () => {
   const onTimeChange = (event, selectedTime) => {
     setShowDatePicker(false);
     if (selectedTime) {
-      setFormData(prev => ({ ...prev, time: selectedTime }));
+      setFormData((prev) => ({ ...prev, time: selectedTime }));
     }
   };
 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView className="px-5">
-        <Text className="text-2xl font-bold text-center my-5">Create New Event</Text>
-        
+        <Text className="text-2xl font-bold text-center my-5">
+          Create New Event
+        </Text>
+
         <View className="mb-4">
-          <Text className="text-lg font-semibold mb-2">Event Name</Text>
+          <Text className="text-lg font-psemibold mb-2">Event Name</Text>
           <TextInput
-            className="border border-gray-300 rounded-lg p-3 text-base"
+            className="border border-gray-300 rounded-lg p-3 text-base font-pregular"
             placeholder="Enter event name"
             value={formData.name}
-            onChangeText={(text) => setFormData(prev => ({ ...prev, name: text }))}
+            onChangeText={(text) =>
+              setFormData((prev) => ({ ...prev, name: text }))
+            }
           />
         </View>
 
         <View className="mb-4">
-          <Text className="text-lg font-semibold mb-2">Category</Text>
+          <Text className="text-lg font-psemibold mb-2">Category</Text>
           <View className="border border-gray-300 rounded-lg">
             <Picker
               selectedValue={formData.category}
-              onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
+              onValueChange={(value) =>
+                setFormData((prev) => ({ ...prev, category: value }))
+              }
             >
               {categories.map((category) => (
                 <Picker.Item key={category} label={category} value={category} />
@@ -66,7 +79,7 @@ const CreateEvent = () => {
           <CustomButton
             text={formData.time.toLocaleString()}
             containerStyle="border border-gray-300 rounded-lg p-3"
-            textStyle="text-base text-black"
+            textStyle="text-base text-white font-pregular"
             handlePress={() => setShowDatePicker(true)}
           />
           {showDatePicker && (
@@ -82,17 +95,19 @@ const CreateEvent = () => {
         <View className="mb-4">
           <Text className="text-lg font-semibold mb-2">Location</Text>
           <TextInput
-            className="border border-gray-300 rounded-lg p-3 text-base"
+            className="border border-gray-300 rounded-lg p-3 text-base font-pregular"
             placeholder="Enter location"
             value={formData.location}
-            onChangeText={(text) => setFormData(prev => ({ ...prev, location: text }))}
+            onChangeText={(text) =>
+              setFormData((prev) => ({ ...prev, location: text }))
+            }
           />
         </View>
 
         <CustomButton
           text="Create Event"
           containerStyle="w-full h-12 bg-blue-500 rounded-lg mb-8"
-          textStyle="text-white text-lg font-semibold"
+          textStyle="text-white text-lg font-psemibold"
           handlePress={handleSubmit}
         />
       </ScrollView>

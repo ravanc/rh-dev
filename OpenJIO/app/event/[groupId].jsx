@@ -2,20 +2,25 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
 import { React, useState, useEffect } from "react";
-import { GROUPS } from "../constants/groups"; 
-import { checkJoined } from "../lib/services";
+
+import { checkJoined, searchGroupById, setJoined } from "../lib/services";
 
 const EventPage = () => {
-  const { groupId } = useLocalSearchParams(); 
+  const { groupId } = useLocalSearchParams();
+  const [group, setGroup] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setGroup(searchGroupById(groupId));
+    setJoinedUi(checkJoined(groupId));
+    setIsLoading(false);
+  }, []);
+  const [joined, setJoinedUi] = useState(false);
 
-  const [group, setGroups] = useState(null);
-  const [joined, setJoined] = useState(false);
-
-  useEffect(() => setJoined(checkJoined(groupId)));
-
-  
-
-  return (
+  return isLoading ? (
+    <SafeAreaView>
+      <Text>Loading</Text>
+    </SafeAreaView>
+  ) : (
     <SafeAreaView className="h-full bg-gray-100 p-4">
       <Text className="text-2xl font-bold text-center">{group.name}</Text>
       <Text className="text-md text-center text-gray-700 mt-2">
@@ -34,27 +39,24 @@ const EventPage = () => {
             • {member}
           </Text>
         ))}
-
       </View>
-      {
-        group.joined ? 
-        <TouchableOpacity className="text-lg font-semibold mt-4 bg-sky-300 p-4 rounded-lg mt-auto mb-8">
-            <Text className="text-white">
-                Join Telegram Group
-            </Text>
+      {joined ? (
+        <TouchableOpacity className="font-semibold bg-blue-500 p-4 rounded-lg mt-auto mb-8">
+          <Text className="text-white text-lg font-psemibold">
+            Join Telegram Group
+          </Text>
         </TouchableOpacity>
-        :
-        <TouchableOpacity 
-         
-          // onPress={() => }
-
-          className="text-lg font-semibold mt-4 bg-lime-500 p-4 rounded-lg mt-auto mb-8">
-            <Text className="text-lg">
-                Join Event
-            </Text>
+      ) : (
+        <TouchableOpacity
+          className="text-lg font-semibold bg-green-600 p-4 rounded-lg mt-auto mb-8"
+          onPress={() => {
+            setJoined(group.groupId);
+            setJoinedUi(true);
+          }}
+        >
+          <Text className="text-lg text-white font-psemibold">Join Event</Text>
         </TouchableOpacity>
-      }
-        
+      )}
     </SafeAreaView>
   );
 };
