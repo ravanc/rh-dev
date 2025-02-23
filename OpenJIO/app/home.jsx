@@ -1,25 +1,56 @@
-import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import React from "react";
 import { router } from "expo-router";
 
 import CustomButton from "../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
+
+const eventTypes = [
+  { name: "Food", image: require("../assets/images/Grabfood.webp") },
+  { name: "Sports", image: require("../assets/images/bouldering.webp") },
+  { name: "Study", image: require("../assets/images/study.webp") },
+  { name: "Party", image: require("../assets/images/party.webp") },
+  { name: "Competition", image: require("../assets/images/competition.webp") },
+  { name: "Gaming", image: require("../assets/images/gaming.webp") },
+];
 
 const Home = () => {
   return (
-    <SafeAreaView>
-      <Text className="font-pregular text-xl">Welcome, KAI KIAT QUAH!</Text>
-      <CustomButton
-        text="Start"
-        containerStyle="w-[256px] h-[42px] mt-[28px] rounded-lg"
-        textStyle="text-lg font-pregular"
-        handlePress={() =>
-          router.push({
-            pathname: "/category/Study",
-            params: {},
-          })
-        }
+    <SafeAreaView className="flex-1 bg-white px-5">
+      <Text className="text-xl font-semibold text-center mt-4">
+        Welcome, KAI KIAT!
+      </Text>
+      <Text className="text-2xl font-bold text-center my-5">
+        Event Categories
+      </Text>
+      <FlatList
+        data={eventTypes}
+        numColumns={2}
+        keyExtractor={(item) => item.name}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            className="flex-1 m-2 h-32 rounded-xl overflow-hidden relative"
+            onPress={() => router.push(`category/${item.name}`)}
+          >
+            <Image
+              source={item.image}
+              className="absolute w-full h-full rounded-xl"
+            />
+            <View className="absolute top-0 left-0 w-full h-full bg-black/30 flex justify-end p-3 rounded-xl">
+              <Text className="text-white font-bold text-lg">{item.name}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
       />
+      <TouchableOpacity
+        className="bg-green-500 p-2 rounded-lg"
+        onPress={() => router.push("/create-event")}
+      >
+        <Text className="font-psemibold text-white text-lg text-center">
+          + Create Event
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
